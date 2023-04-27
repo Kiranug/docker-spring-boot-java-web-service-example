@@ -17,7 +17,7 @@ spec:
         image: starappimage.azurecr.io/kiranugmavenproject:399
         imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 8080
       imagePullSecrets:
       - name: acrpull
 
