@@ -56,6 +56,6 @@ stages:
         action: 'deploy'
         connectionType: 'kubernetesServiceConnection'
         kubernetesServiceConnection: 'aksconnection'
-        manifests: '$(Build.SourcesDirectory)/kubernetes-manifests/myapp-deployment.yaml'
+        manifests: '$(Build.SourcesDirectory)/kubernetes-manifests/'
         containers: |
           $(containerRegistry)/$(imageRepository):$(IMAGE_TAG)
