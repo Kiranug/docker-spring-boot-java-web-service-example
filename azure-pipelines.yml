@@ -51,28 +51,11 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(IMAGE_TAG)
-    - task: CopyFiles@2
-      inputs:
-        contents: $(build.sourcesDirectory)/kubernetes-manifests/*.*
-        targetFolder: $(build.artifactStagingDirectory)
-    - task: PublishBuildArtifacts@1
-      inputs:
-        pathtoPublish: $(build.artifactStagingDirectory)
-        artifactName: drop
-    - task: qetza.replacetokens.replacetokens-task.replacetokens@3
-      displayName: Replace tokens in **/*
-      inputs:
-        rootDirectory: $(Pipeline.Workspace)/drop
-        targetFiles: '**/*.yml'
-        keepToken: true
-        tokenPrefix: __
-        tokenSuffix: __
-        
     - task: KubernetesManifest@1
       inputs:
         action: 'deploy'
         connectionType: 'kubernetesServiceConnection'
         kubernetesServiceConnection: 'aksconnection'
         manifests: '$(Build.SourcesDirectory)/kubernetes-manifests/myapp-deployment.yaml'
-        substitutionVariables: |
-          IMAGE_TAG=$(IMAGE_TAG)
+        containers: |
+          $(containerRegistry)/$(imageRepository):$(IMAGE_TAG)
