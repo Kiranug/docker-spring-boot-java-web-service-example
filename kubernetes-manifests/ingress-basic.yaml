@@ -16,3 +16,4 @@ spec:
             name: my-kubernetes-service
             port:
               name: http
+              number: 8080
